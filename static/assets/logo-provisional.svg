@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 220" role="img" aria-label="Legendary Barber, logotipo provisional">
+  <rect width="640" height="220" rx="18" fill="#0c0c10"/>
+  <rect x="18" y="18" width="184" height="184" rx="14" fill="none" stroke="#c8a96b" stroke-width="3"/>
+  <text x="110" y="137" text-anchor="middle" fill="#c8a96b" font-family="Georgia,serif" font-size="92">LB</text>
+  <text x="232" y="104" fill="#f4f1ed" font-family="Arial,sans-serif" font-size="43" font-weight="700" letter-spacing="8">LEGENDARY</text>
+  <text x="236" y="151" fill="#c8a96b" font-family="Arial,sans-serif" font-size="25" letter-spacing="13">BARBER</text>
+</svg>

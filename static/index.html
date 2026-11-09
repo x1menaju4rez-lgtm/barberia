@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101014">
+  <meta name="description" content="Legendary Barber: tu imagen habla. Haz que sea legendaria.">
+  <title>Legendary Barber</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="topbar">
+    <a class="brand" href="#inicio"><span class="brand-mark">LB</span><span><b>LEGENDARY</b><small>BARBER</small></span></a>
+    <div class="top-actions"><span id="connection" class="connection"><i></i> Conectado</span><span id="user-badge" class="user-badge">Invitado</span><button id="logout-btn" class="btn btn-quiet hidden">Salir</button></div>
+  </header>
+
+  <main class="shell">
+    <section id="auth-screen" class="auth-layout">
+      <div class="hero-copy">
+        <p class="eyebrow">ESTILO · PRECISIÓN · PERSONALIDAD</p>
+        <h1>Tu imagen habla.<br><em>Haz que sea legendaria.</em></h1>
+        <p class="lead">Tu barbería, tu estilo y tu historial en un solo lugar.</p>
+        <div class="hero-line"><span></span><small>LEGENDARY BARBER · UNA NUEVA EXPERIENCIA</small></div>
+      </div>
+      <div class="auth-card panel">
+        <div class="tabs auth-tabs"><button class="tab active" data-auth-tab="customer">Soy cliente</button><button class="tab" data-auth-tab="staff">Personal</button></div>
+        <form id="customer-form" class="form-stack">
+          <div><p class="eyebrow">ACCESO DE CLIENTES</p><h2>Bienvenido</h2><p class="muted">Regístrate con tu nombre y teléfono. Para volver a entrar, deja el nombre vacío.</p></div>
+          <label>Nombre completo <input id="customer-name" autocomplete="name" placeholder="Ej. Juan Pérez López" maxlength="100"></label>
+          <label>Teléfono mexicano <input id="customer-phone" inputmode="numeric" autocomplete="tel" placeholder="10 dígitos" maxlength="10" required></label>
+          <button class="btn btn-primary" type="submit" id="request-otp">Enviar código de acceso <span>↗</span></button>
+          <div id="otp-area" class="hidden"><label>Código de verificación <input id="customer-otp" inputmode="numeric" maxlength="6" placeholder="Código de 6 dígitos"></label><button class="btn btn-gold" id="verify-otp" type="button">Verificar y entrar</button><p class="hint">En modo local, el código aparece en la terminal del servidor. No se envía SMS real.</p></div>
+        </form>
+        <form id="staff-form" class="form-stack hidden">
+          <div><p class="eyebrow">ACCESO PRIVADO</p><h2>Panel de equipo</h2><p class="muted">Ingresa tu código personal de 10 dígitos.</p></div>
+          <label>Código de empleado <input id="staff-code" inputmode="numeric" maxlength="10" placeholder="••••••••••" required></label>
+          <label id="admin-password-wrap">Contraseña de administradora <input id="admin-password" type="password" autocomplete="current-password" placeholder="Solo requerida para la administradora"></label>
+          <button class="btn btn-primary" type="submit">Entrar al sistema <span>↗</span></button>
+        </form>
+        <p id="auth-message" class="message" role="status"></p>
+      </div>
+    </section>
+
+    <section id="app-screen" class="hidden">
+      <div class="welcome-row"><div><p class="eyebrow" id="role-label">PANEL</p><h1 id="welcome-title">Hola</h1><p class="muted" id="welcome-subtitle">Tu espacio de trabajo.</p></div><div class="date-pill" id="today-label"></div></div>
+      <nav id="main-nav" class="nav-strip"></nav>
+      <div id="toast" class="toast hidden" role="status"></div>
+
+      <section id="view-dashboard" class="view hidden">
+        <div class="section-heading"><div><p class="eyebrow">VISIÓN GENERAL</p><h2>Resumen del negocio</h2></div><button class="btn btn-outline" data-refresh>Actualizar ↻</button></div>
+        <div id="dashboard-cards" class="metric-grid"></div>
+        <div class="two-col"><article class="panel content-panel"><h3>Accesos rápidos</h3><div class="quick-grid"><button data-go="appointments">Agenda <b>→</b></button><button data-go="products">Productos <b>→</b></button><button data-go="inventory">Inventario <b>→</b></button><button data-go="sales">Ventas y caja <b>→</b></button></div></article><article class="panel content-panel"><h3>Reglas del sistema</h3><p class="muted">Los cambios importantes se validan en el servidor. Las operaciones de inventario quedan auditadas y los movimientos solicitados esperan autorización.</p></article></div>
+      </section>
+
+      <section id="view-services" class="view hidden"><div class="section-heading"><div><p class="eyebrow">MENÚ DE EXPERIENCIAS</p><h2>Servicios</h2></div></div><div id="services-list" class="catalog-grid"></div>
+        <form id="service-create" class="panel form-panel admin-only hidden"><h3>Agregar servicio</h3><div class="form-grid"><label>Categoría<input name="category" required placeholder="Cortes y estilizado"></label><label>Nombre<input name="name" required></label><label>Precio (MXN)<input name="price" type="number" min="0" step="0.01" value="0"></label><label>Duración (min)<input name="duration_minutes" type="number" min="1" value="30"></label><label class="span-2">Descripción<input name="description"></label><label class="check-label"><input name="published" type="checkbox"> Publicar en catálogo</label></div><button class="btn btn-primary">Guardar servicio</button></form>
+      </section>
+
+      <section id="view-products" class="view hidden"><div class="section-heading"><div><p class="eyebrow">TIENDA Y EXISTENCIAS</p><h2>Productos</h2></div></div><div id="products-list" class="catalog-grid"></div>
+        <form id="product-create" class="panel form-panel admin-only hidden"><h3>Agregar producto</h3><div class="form-grid"><label>Nombre<input name="name" required></label><label>Marca<input name="brand"></label><label>Precio venta (MXN)<input name="price" type="number" min="0" step="0.01" value="0"></label><label>Costo (MXN)<input name="cost" type="number" min="0" step="0.01" value="0"></label><label>Existencias iniciales<input name="stock" type="number" min="0" value="0"></label><label>Stock mínimo<input name="min_stock" type="number" min="0" value="0"></label><label>Proveedor<input name="supplier"></label><label>Descripción<input name="description"></label><label class="check-label"><input name="published" type="checkbox"> Publicar en catálogo</label></div><button class="btn btn-primary">Guardar producto</button></form>
+      </section>
+
+      <section id="view-appointments" class="view hidden"><div class="section-heading"><div><p class="eyebrow">AGENDA Y DISPONIBILIDAD</p><h2>Citas</h2></div><button class="btn btn-outline" data-refresh>Actualizar ↻</button></div><div id="appointments-list" class="stack-list"></div>
+        <form id="appointment-create" class="panel form-panel admin-only hidden"><h3>Registrar solicitud de cita</h3><div class="form-grid"><label>Cliente<select name="client_id" id="appointment-client" required></select></label><label>Barbero<select name="barber_id" id="appointment-barber"></select></label><label>Fecha y hora<input name="starts_at" type="datetime-local" required></label><label>Servicios<select name="service_ids" id="appointment-services" multiple size="5"></select><small>Ctrl/Cmd para seleccionar máximo 3.</small></label><label class="span-2">Notas<input name="notes"></label></div><button class="btn btn-primary">Registrar cita</button></form>
+      </section>
+
+      <section id="view-inventory" class="view hidden"><div class="section-heading"><div><p class="eyebrow">CONTROL DE MOVIMIENTOS</p><h2>Inventario</h2></div><button class="btn btn-outline" data-refresh>Actualizar ↻</button></div><div id="inventory-list" class="stack-list"></div>
+        <form id="movement-create" class="panel form-panel inventory-only"><h3>Solicitar movimiento</h3><div class="form-grid"><label>Producto<select name="product_id" id="movement-product" required></select></label><label>Tipo<select name="movement_type"><option value="entrada">Entrada</option><option value="salida">Salida</option><option value="ajuste">Ajuste (stock final)</option><option value="merma">Merma</option></select></label><label>Cantidad<input name="quantity" type="number" min="1" required></label><label>Motivo<input name="reason" required></label></div><button class="btn btn-primary">Enviar solicitud</button></form>
+      </section>
+
+      <section id="view-sales" class="view hidden"><div class="section-heading"><div><p class="eyebrow">PUNTO DE VENTA</p><h2>Ventas y caja</h2></div></div><form id="sale-create" class="panel form-panel"><h3>Registrar venta de producto</h3><div class="form-grid"><label>Producto<select name="item_id" id="sale-product" required></select></label><label>Cantidad<input name="quantity" type="number" min="1" value="1"></label><label>Forma de pago<select name="payment_method"><option value="efectivo">Efectivo</option><option value="transferencia">Transferencia</option></select></label></div><button class="btn btn-primary">Cobrar y descontar inventario</button><p class="hint">Los precios se toman del catálogo del servidor; nunca del navegador.</p></form><div id="sales-list" class="stack-list"></div></section>
+
+      <section id="view-employees" class="view hidden"><div class="section-heading"><div><p class="eyebrow">EQUIPO Y ACCESOS</p><h2>Empleados</h2></div></div><div id="employees-list" class="stack-list"></div><form id="employee-create" class="panel form-panel admin-only hidden"><h3>Agregar empleado</h3><div class="form-grid"><label>Nombre<input name="full_name" required></label><label>Rol<select name="role"><option value="barber">Barbero</option><option value="specialist">Especialista</option><option value="inventory">Inventario</option><option value="cashier">Cajero</option></select></label><label>Código personal de 10 dígitos<input name="code" inputmode="numeric" maxlength="10" required></label></div><button class="btn btn-primary">Crear empleado</button></form></section>
+
+      <section id="view-profile" class="view hidden"><div class="section-heading"><div><p class="eyebrow">MI CUENTA</p><h2>Perfil e historial</h2></div></div><div id="profile-card" class="panel content-panel"></div></section>
+      <section id="view-audit" class="view hidden"><div class="section-heading"><div><p class="eyebrow">TRAZABILIDAD</p><h2>Auditoría</h2></div></div><div id="audit-list" class="stack-list"></div></section>
+    </section>
+    <footer><span>LEGENDARY BARBER</span><span>Tu imagen habla. Haz que sea legendaria.</span></footer>
+  </main>
+  <script src="/static/js/app.js" defer></script>
+</body>
+</html>
